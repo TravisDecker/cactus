@@ -7,6 +7,10 @@ public interface BasePostEntity {
 
   public UUID getPostId();
 
+  public UserEntity getUser();
+
+  public boolean getReportFlag();
+
   public Date getPostDate();
 
   public String getPostBody();

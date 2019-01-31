@@ -15,12 +15,17 @@ public class UserEntity implements BaseUserEntity {
   @Id
   @NonNull
   private UUID userId;
+  @NonNull
+  private String screenName;
+  @NonNull
+  private boolean reportFlag;
+  @NonNull
   private String firstName;
+  @NonNull
   private String lastName;
   private String occupation;
   private Date birthDay;
   private List<PostEntity> posts;
-
 
   @Override
   public UUID getUserId() {
@@ -29,6 +34,24 @@ public class UserEntity implements BaseUserEntity {
 
   public void setUserId(UUID userId) {
     this.userId = userId;
+  }
+
+  @Override
+  public String getScreenName() {
+    return null;
+  }
+
+  public void setScreenName(String screenName) {
+    this.screenName = screenName;
+  }
+
+  @Override
+  public boolean getReportFlag() {
+    return false;
+  }
+
+  public void setReportFlag(boolean reportFlag) {
+    this.reportFlag = reportFlag;
   }
 
   @Override

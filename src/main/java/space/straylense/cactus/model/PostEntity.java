@@ -15,7 +15,13 @@ public class PostEntity implements BasePostEntity {
   @Id
   @NonNull
   private UUID postId;
+  @NonNull
+  private UserEntity user;
+  @NonNull
+  private boolean reportFlag;
+  @NonNull
   private Date postDate;
+  @NonNull
   private String postBody;
   //Image is String temporarily
   private String image;
@@ -26,9 +32,35 @@ public class PostEntity implements BasePostEntity {
     return postId;
   }
 
+  public void setPostId(UUID postId) {
+    this.postId = postId;
+  }
+
+  @Override
+  public UserEntity getUser() {
+    return user;
+  }
+
+  public void setUser(UserEntity user) {
+    this.user = user;
+  }
+
+  @Override
+  public boolean getReportFlag() {
+    return reportFlag;
+  }
+
+  public void setReportFlag(boolean reportFlag) {
+    this.reportFlag = reportFlag;
+  }
+
   @Override
   public Date getPostDate() {
     return postDate;
+  }
+
+  public void setPostDate(Date postDate) {
+    this.postDate = postDate;
   }
 
   @Override
@@ -36,9 +68,17 @@ public class PostEntity implements BasePostEntity {
     return postBody;
   }
 
+  public void setPostBody(String postBody) {
+    this.postBody = postBody;
+  }
+
   @Override
   public String getImage() {
     return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
   public List<CommentEntity> getComments() {

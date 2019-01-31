@@ -3,16 +3,24 @@ package space.straylense.cactus.model;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Entity
 @Component
 public class CommentEntity {
 
+  @Id
+  @NonNull
   private UUID commentId;
+  @NonNull
   private boolean reportFlag;
+  @NonNull
   private UserEntity user;
+  @NonNull
   private Date date;
+  @NonNull
   private String comment;
 
   public UUID getCommentId() {

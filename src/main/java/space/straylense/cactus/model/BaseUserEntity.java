@@ -5,14 +5,18 @@ import java.util.UUID;
 
 public interface BaseUserEntity {
 
-  UUID getUserId();
+  public UUID getUserId();
 
-  String getFirstName();
+  public String getScreenName();
 
-  String getLastName();
+  public boolean getReportFlag();
 
-  String getOccupation();
+  public String getFirstName();
 
-  Date getBirthDay();
+  public String getLastName();
+
+  public String getOccupation();
+
+  public Date getBirthDay();
 
 }
