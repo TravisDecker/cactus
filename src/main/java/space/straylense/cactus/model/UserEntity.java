@@ -24,7 +24,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public UUID getUserId() {
-    return null;
+    return userId;
   }
 
   public void setUserId(UUID userId) {
@@ -33,7 +33,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public String getFirstName() {
-    return null;
+    return firstName;
   }
 
   public void setFirstName(String firstName) {
@@ -42,7 +42,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public String getLastName() {
-    return null;
+    return lastName;
   }
 
   public void setLastName(String lastName) {
@@ -51,7 +51,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public String getOccupation() {
-    return null;
+    return occupation;
   }
 
   public void setOccupation(String occupation) {
@@ -60,7 +60,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public Date getBirthDay() {
-    return null;
+    return birthDay;
   }
 
   public void setBirthDay(Date birthDay) {

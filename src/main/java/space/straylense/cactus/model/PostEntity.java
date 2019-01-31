@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Component
-public class PostEntity {
+public class PostEntity implements BasePostEntity {
 
   @Id
   @NonNull
@@ -20,4 +20,29 @@ public class PostEntity {
   //Image is String temporarily
   private String image;
   private List<CommentEntity> comments;
+
+  @Override
+  public UUID getPostId() {
+    return postId;
+  }
+
+  @Override
+  public Date getPostDate() {
+    return postDate;
+  }
+
+  @Override
+  public String getPostBody() {
+    return postBody;
+  }
+
+  @Override
+  public String getImage() {
+    return image;
+  }
+
+  public List<CommentEntity> getComments() {
+    return comments;
+  }
+
 }
