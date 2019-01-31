@@ -1,6 +1,5 @@
 package space.straylense.cactus.model;
 
-import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +17,7 @@ public class PostEntity {
   private UUID postId;
   private Date postDate;
   private String postBody;
-  private Blob image;
+  //Image is String temporarily
+  private String image;
   private List<CommentEntity> comments;
 }
