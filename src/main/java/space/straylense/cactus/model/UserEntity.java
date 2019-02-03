@@ -1,14 +1,18 @@
 package space.straylense.cactus.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import space.straylense.cactus.view.BasePostEntity;
@@ -17,6 +21,8 @@ import space.straylense.cactus.view.BaseUserEntity;
 @Entity
 @Component
 public class UserEntity implements BaseUserEntity {
+
+  private static EntityLinks entityLinks;
 
   @Id
   @NonNull
@@ -38,6 +44,24 @@ public class UserEntity implements BaseUserEntity {
   private List<PostEntity> posts = new ArrayList<>();
   @JsonSerialize(contentAs = BaseUserEntity.class)
   private List<UserEntity> friends = new ArrayList<>();
+
+  public static EntityLinks getEntityLinks() {
+    return entityLinks;
+  }
+
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    UserEntity.entityLinks = entityLinks;
+  }
+
+  @PostConstruct
+  private void initEntityLinks() {
+    String ignore = entityLinks.toString();
+  }
+
+  public URI getHref() {
+    return entityLinks.linkForSingleResource(UserEntity.class, userId).toUri();
+  }
 
   @Override
   public UUID getUserId() {
