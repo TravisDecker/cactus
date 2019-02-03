@@ -9,6 +9,8 @@ public interface BaseUserEntity {
 
   public String getScreenName();
 
+  public String getProfilePicture();
+
   public boolean getReportFlag();
 
   public String getFirstName();

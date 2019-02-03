@@ -18,6 +18,8 @@ public class UserEntity implements BaseUserEntity {
   @NonNull
   private String screenName;
   @NonNull
+  private String profilePicture;
+  @NonNull
   private boolean reportFlag;
   @NonNull
   private String firstName;
@@ -43,6 +45,15 @@ public class UserEntity implements BaseUserEntity {
 
   public void setScreenName(String screenName) {
     this.screenName = screenName;
+  }
+
+  @Override
+  public String getProfilePicture() {
+    return null;
+  }
+
+  public void setProfilePicture(String profilePicture) {
+    this.profilePicture = profilePicture;
   }
 
   @Override
