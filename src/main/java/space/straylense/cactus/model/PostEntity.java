@@ -1,5 +1,6 @@
 package space.straylense.cactus.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,12 +25,13 @@ public class PostEntity implements BasePostEntity {
   @NonNull
   private boolean reportFlag;
   @NonNull
+  private int bumps;
+  @NonNull
   private Date postDate;
   @NonNull
   private String postBody;
-  //Image is String temporarily
   private String image;
-  private List<CommentEntity> comments;
+  private List<CommentEntity> comments = new ArrayList<>();
 
   @Override
   public UUID getPostId() {
@@ -52,6 +54,15 @@ public class PostEntity implements BasePostEntity {
   @Override
   public boolean getReportFlag() {
     return reportFlag;
+  }
+
+  @Override
+  public int getBumps() {
+    return bumps;
+  }
+
+  public void setBumps(int bumps) {
+    this.bumps = bumps;
   }
 
   public void setReportFlag(boolean reportFlag) {

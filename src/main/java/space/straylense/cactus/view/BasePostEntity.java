@@ -12,6 +12,8 @@ public interface BasePostEntity {
 
   public boolean getReportFlag();
 
+  public int getBumps();
+
   public Date getPostDate();
 
   public String getPostBody();

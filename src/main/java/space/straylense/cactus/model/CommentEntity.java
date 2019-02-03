@@ -25,6 +25,8 @@ public class CommentEntity {
   private Date date;
   @NonNull
   private String comment;
+  @NonNull
+  private int Bumps;
 
   public UUID getCommentId() {
     return commentId;
@@ -64,5 +66,13 @@ public class CommentEntity {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  public int getBumps() {
+    return Bumps;
+  }
+
+  public void setBumps(int bumps) {
+    Bumps = bumps;
   }
 }
