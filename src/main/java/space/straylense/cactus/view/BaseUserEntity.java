@@ -1,4 +1,4 @@
-package space.straylense.cactus.model;
+package space.straylense.cactus.view;
 
 import java.util.Date;
 import java.util.UUID;

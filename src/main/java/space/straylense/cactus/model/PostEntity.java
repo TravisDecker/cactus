@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import space.straylense.cactus.view.BasePostEntity;
 
 @Entity
 @Component
@@ -14,6 +17,7 @@ public class PostEntity implements BasePostEntity {
 
   @Id
   @NonNull
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID postId;
   @NonNull
   private UserEntity user;
