@@ -1,17 +1,22 @@
 package space.straylense.cactus.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import space.straylense.cactus.view.BasePostEntity;
 
 @Entity
 @Component
@@ -33,6 +38,12 @@ public class CommentEntity {
   private String comment;
   @NonNull
   private int Bumps;
+
+  @NonNull
+  @JsonSerialize(contentAs = BasePostEntity.class)
+  @ManyToOne(fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  private PostEntity post;
 
   public static EntityLinks getEntityLinks() {
     return entityLinks;
@@ -58,6 +69,14 @@ public class CommentEntity {
 
   public void setCommentId(UUID commentId) {
     this.commentId = commentId;
+  }
+
+  public PostEntity getPost() {
+    return post;
+  }
+
+  public void setPost(PostEntity post) {
+    this.post = post;
   }
 
   public boolean isReportFlag() {
