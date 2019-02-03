@@ -50,7 +50,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public String getScreenName() {
-    return null;
+    return screenName;
   }
 
   public void setScreenName(String screenName) {
@@ -59,7 +59,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public String getProfilePicture() {
-    return null;
+    return profilePicture;
   }
 
   public void setProfilePicture(String profilePicture) {
@@ -68,7 +68,7 @@ public class UserEntity implements BaseUserEntity {
 
   @Override
   public boolean getReportFlag() {
-    return false;
+    return reportFlag;
   }
 
   public void setReportFlag(boolean reportFlag) {
@@ -115,4 +115,7 @@ public class UserEntity implements BaseUserEntity {
     return posts;
   }
 
+  public List<UserEntity> getFriends() {
+    return friends;
+  }
 }
