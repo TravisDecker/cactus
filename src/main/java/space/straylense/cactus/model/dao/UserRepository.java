@@ -7,4 +7,6 @@ import space.straylense.cactus.model.UserEntity;
 public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
   UserEntity findAllByUserId(UUID userID);
+
+  UserEntity findAllByScreenName(String screenName);
 }

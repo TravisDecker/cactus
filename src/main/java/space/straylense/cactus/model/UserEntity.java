@@ -43,6 +43,7 @@ public class UserEntity implements BaseUserEntity {
   private String lastName;
   private String occupation;
   private Date birthDay;
+  private Date dateCreated;
 
   @JsonSerialize(contentAs = BasePostEntity.class)
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
@@ -146,6 +147,15 @@ public class UserEntity implements BaseUserEntity {
 
   public void setBirthDay(Date birthDay) {
     this.birthDay = birthDay;
+  }
+
+  @Override
+  public Date getDateCreated() {
+    return dateCreated;
+  }
+
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
   }
 
   public List<PostEntity> getPosts() {

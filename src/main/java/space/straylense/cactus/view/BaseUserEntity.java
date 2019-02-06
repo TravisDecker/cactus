@@ -21,4 +21,6 @@ public interface BaseUserEntity {
 
   public Date getBirthDay();
 
+  public Date getDateCreated();
+
 }

@@ -1,5 +1,6 @@
 package space.straylense.cactus.controller;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,16 @@ public class UserController {
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
-    userRepository.save(user);
-    return ResponseEntity.created(user.getHref()).body(user);
+    if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
+      user.setBirthDay(new Date());
+      userRepository.save(user);
+      return ResponseEntity.created(user.getHref()).body(user);
+    } else {
+      return null;
+    }
   }
 
-  @GetMapping(value = "{userId}/users", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public UserEntity getUser(@PathVariable("userId") UUID userId) {
     return userRepository.findAllByUserId(userId);
   }
