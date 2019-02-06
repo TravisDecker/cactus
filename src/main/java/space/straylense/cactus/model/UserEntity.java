@@ -43,11 +43,19 @@ public class UserEntity implements BaseUserEntity {
   private String lastName;
   private String occupation;
   private Date birthDay;
+
   @JsonSerialize(contentAs = BasePostEntity.class)
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "post",
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private List<PostEntity> posts = new ArrayList<>();
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  private List<CommentEntity> comments = new ArrayList<>();
+
   @JsonSerialize(contentAs = BaseUserEntity.class)
+  @OneToMany(fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private List<UserEntity> friends = new ArrayList<>();
 
   public static EntityLinks getEntityLinks() {
@@ -142,6 +150,10 @@ public class UserEntity implements BaseUserEntity {
 
   public List<PostEntity> getPosts() {
     return posts;
+  }
+
+  public List<CommentEntity> getComments() {
+    return comments;
   }
 
   public List<UserEntity> getFriends() {

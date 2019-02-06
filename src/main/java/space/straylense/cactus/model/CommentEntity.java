@@ -17,6 +17,7 @@ import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import space.straylense.cactus.view.BasePostEntity;
+import space.straylense.cactus.view.BaseUserEntity;
 
 @Entity
 @Component
@@ -31,6 +32,9 @@ public class CommentEntity {
   @NonNull
   private boolean reportFlag;
   @NonNull
+  @JsonSerialize(contentAs = BaseUserEntity.class)
+  @ManyToOne(fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private UserEntity user;
   @NonNull
   private Date date;

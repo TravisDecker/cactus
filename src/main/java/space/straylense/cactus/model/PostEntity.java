@@ -1,20 +1,26 @@
 package space.straylense.cactus.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import space.straylense.cactus.view.BasePostEntity;
+import space.straylense.cactus.view.BaseUserEntity;
 
 @Entity
 @Component
@@ -27,6 +33,9 @@ public class PostEntity implements BasePostEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID postId;
   @NonNull
+  @JsonSerialize(contentAs = BaseUserEntity.class)
+  @ManyToOne(fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private UserEntity user;
   @NonNull
   private boolean reportFlag;
@@ -37,6 +46,8 @@ public class PostEntity implements BasePostEntity {
   @NonNull
   private String postBody;
   private String image;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "post",
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private List<CommentEntity> comments = new ArrayList<>();
 
   public static EntityLinks getEntityLinks() {
