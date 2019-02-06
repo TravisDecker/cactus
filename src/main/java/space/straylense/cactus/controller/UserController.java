@@ -34,7 +34,7 @@ public class UserController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
     if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
-      user.setBirthDay(new Date());
+      user.setDateCreated(new Date());
       userRepository.save(user);
       return ResponseEntity.created(user.getHref()).body(user);
     } else {
