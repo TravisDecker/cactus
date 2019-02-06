@@ -1,10 +1,8 @@
-package space.straylense.cactus.model;
+package space.straylense.cactus.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
@@ -14,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
@@ -24,31 +21,38 @@ import space.straylense.cactus.view.BaseUserEntity;
 
 @Entity
 @Component
-public class PostEntity implements BasePostEntity {
+public class CommentEntity {
 
   private static EntityLinks entityLinks;
 
   @Id
   @NonNull
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID postId;
+  private UUID commentId;
+
+  @NonNull
+  private boolean reportFlag;
+
   @NonNull
   @JsonSerialize(contentAs = BaseUserEntity.class)
   @ManyToOne(fetch = FetchType.LAZY,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private UserEntity user;
+
   @NonNull
-  private boolean reportFlag;
+  private Date date;
+
   @NonNull
-  private int bumps;
+  private String comment;
+
   @NonNull
-  private Date postDate;
+  private int Bumps;
+
   @NonNull
-  private String postBody;
-  private String image;
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "post",
+  @JsonSerialize(contentAs = BasePostEntity.class)
+  @ManyToOne(fetch = FetchType.LAZY,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  private List<CommentEntity> comments = new ArrayList<>();
+  private PostEntity post;
 
   public static EntityLinks getEntityLinks() {
     return entityLinks;
@@ -56,7 +60,7 @@ public class PostEntity implements BasePostEntity {
 
   @Autowired
   private void setEntityLinks(EntityLinks entityLinks) {
-    PostEntity.entityLinks = entityLinks;
+    CommentEntity.entityLinks = entityLinks;
   }
 
   @PostConstruct
@@ -65,19 +69,33 @@ public class PostEntity implements BasePostEntity {
   }
 
   public URI getHref() {
-    return entityLinks.linkForSingleResource(PostEntity.class, postId).toUri();
+    return entityLinks.linkForSingleResource(CommentEntity.class, commentId).toUri();
   }
 
-  @Override
-  public UUID getPostId() {
-    return postId;
+  public UUID getCommentId() {
+    return commentId;
   }
 
-  public void setPostId(UUID postId) {
-    this.postId = postId;
+  public void setCommentId(UUID commentId) {
+    this.commentId = commentId;
   }
 
-  @Override
+  public PostEntity getPost() {
+    return post;
+  }
+
+  public void setPost(PostEntity post) {
+    this.post = post;
+  }
+
+  public boolean isReportFlag() {
+    return reportFlag;
+  }
+
+  public void setReportFlag(boolean reportFlag) {
+    this.reportFlag = reportFlag;
+  }
+
   public UserEntity getUser() {
     return user;
   }
@@ -86,53 +104,27 @@ public class PostEntity implements BasePostEntity {
     this.user = user;
   }
 
-  @Override
-  public boolean getReportFlag() {
-    return reportFlag;
+  public Date getDate() {
+    return date;
   }
 
-  @Override
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
   public int getBumps() {
-    return bumps;
+    return Bumps;
   }
 
   public void setBumps(int bumps) {
-    this.bumps = bumps;
+    Bumps = bumps;
   }
-
-  public void setReportFlag(boolean reportFlag) {
-    this.reportFlag = reportFlag;
-  }
-
-  @Override
-  public Date getPostDate() {
-    return postDate;
-  }
-
-  public void setPostDate(Date postDate) {
-    this.postDate = postDate;
-  }
-
-  @Override
-  public String getPostBody() {
-    return postBody;
-  }
-
-  public void setPostBody(String postBody) {
-    this.postBody = postBody;
-  }
-
-  @Override
-  public String getImage() {
-    return image;
-  }
-
-  public void setImage(String image) {
-    this.image = image;
-  }
-
-  public List<CommentEntity> getComments() {
-    return comments;
-  }
-
 }

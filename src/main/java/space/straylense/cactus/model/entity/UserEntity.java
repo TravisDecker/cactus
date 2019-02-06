@@ -1,9 +1,9 @@
-package space.straylense.cactus.model;
+package space.straylense.cactus.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -36,28 +36,28 @@ public class UserEntity implements BaseUserEntity {
   @NonNull
   private String profilePicture;
   @NonNull
-  private boolean reportFlag;
+  private boolean reportFlag = false;
   @NonNull
   private String firstName;
   @NonNull
   private String lastName;
   private String occupation;
   private Date birthDay;
-  private Date dateCreated;
+  private Date dateCreated = new Date();
 
   @JsonSerialize(contentAs = BasePostEntity.class)
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  private List<PostEntity> posts = new ArrayList<>();
+  private List<PostEntity> posts = new LinkedList<>();
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  private List<CommentEntity> comments = new ArrayList<>();
+  private List<CommentEntity> comments = new LinkedList<>();
 
   @JsonSerialize(contentAs = BaseUserEntity.class)
   @OneToMany(fetch = FetchType.LAZY,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  private List<UserEntity> friends = new ArrayList<>();
+  private List<UserEntity> friends = new LinkedList<>();
 
   public static EntityLinks getEntityLinks() {
     return entityLinks;

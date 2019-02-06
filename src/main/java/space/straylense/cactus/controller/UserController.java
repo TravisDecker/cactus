@@ -1,6 +1,5 @@
 package space.straylense.cactus.controller;
 
-import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import space.straylense.cactus.model.UserEntity;
 import space.straylense.cactus.model.dao.UserRepository;
+import space.straylense.cactus.model.entity.UserEntity;
 
 @RestController
 @RequestMapping("/users")
@@ -34,7 +33,6 @@ public class UserController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
     if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
-      user.setDateCreated(new Date());
       userRepository.save(user);
       return ResponseEntity.created(user.getHref()).body(user);
     } else {
