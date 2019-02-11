@@ -1,6 +1,5 @@
 package space.straylense.cactus.controller;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,11 +43,6 @@ public class PostController {
     return ResponseEntity.created(post.getHref()).body(post);
   }
 
-  @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<PostEntity> getPosts(@PathVariable("userId") UUID userId) {
-    UserEntity user = userRepository.findAllByUserId(userId);
-    return postRepository.findAllByUserOrderByPostDate(user);
-  }
 
   @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
   @ExceptionHandler(NoSuchElementException.class)
