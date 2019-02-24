@@ -36,6 +36,7 @@ public class UserController {
     this.postRepository = postRepository;
   }
 
+  //TODO Do somthing other than nothing when user attempts to post a duplicate user.
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
     if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
