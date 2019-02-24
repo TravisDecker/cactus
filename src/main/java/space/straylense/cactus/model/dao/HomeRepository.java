@@ -6,5 +6,4 @@ import space.straylense.cactus.model.entity.UserEntity;
 
 public interface HomeRepository extends CrudRepository<UserEntity, UUID> {
 
-
 }

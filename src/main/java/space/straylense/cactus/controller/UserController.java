@@ -1,5 +1,7 @@
 package space.straylense.cactus.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +36,15 @@ public class UserController {
     this.postRepository = postRepository;
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
-    if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
-      userRepository.save(user);
-      return ResponseEntity.created(user.getHref()).body(user);
-    } else {
-      return null;
-    }
-  }
+//  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
+//    if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
+//      userRepository.save(user);
+//      return ResponseEntity.created(user.getHref()).body(user);
+//    } else {
+//      return null;
+//    }
+//  }
 
   @PostMapping(value = "{userId}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,11 +56,39 @@ public class UserController {
     return ResponseEntity.created(post.getHref()).body(post);
   }
 
-  @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserEntity getUser(@PathVariable("userId") UUID userId) {
+  @GetMapping(value = "id/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public UserEntity getUserById(@PathVariable("userId") UUID userId) {
     return userRepository.findAllByUserId(userId);
   }
 
+  @GetMapping(value = "{screenName}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<UserEntity> getUserByScreenName(@PathVariable("screenName") String screenName) {
+    return userRepository.findAllByScreenNameContaining(screenName);
+  }
+
+  @GetMapping(value = "searchbyname/{partialName}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<UserEntity> getUserByPartialName(@PathVariable("partialName") String partialName) {
+    List<UserEntity> result = new ArrayList<>();
+    String[] names;
+    if (partialName.contains(" ")) {
+      names = partialName.split(" ");
+      result = userRepository.findAllByFirstNameContainsOrLastNameContains(names[0], names[1]);
+    } else {
+      result.addAll(userRepository.findAllByFirstNameContains(partialName));
+      result.addAll(userRepository.findAllByLastNameContains(partialName));
+    }
+
+    return result;
+  }
+
+  public List<UserEntity> getUserByLastName(String lastName) {
+    return userRepository.findAllByLastNameContains(lastName);
+  }
+
+
+  public List<UserEntity> getUserByFirstName(String firstName) {
+    return userRepository.findAllByFirstNameContains(firstName);
+  }
 
   @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
   @ExceptionHandler(NoSuchElementException.class)
