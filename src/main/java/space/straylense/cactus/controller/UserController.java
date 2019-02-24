@@ -36,15 +36,15 @@ public class UserController {
     this.postRepository = postRepository;
   }
 
-//  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//  public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
-//    if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
-//      userRepository.save(user);
-//      return ResponseEntity.created(user.getHref()).body(user);
-//    } else {
-//      return null;
-//    }
-//  }
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
+    if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
+      userRepository.save(user);
+      return ResponseEntity.created(user.getHref()).body(user);
+    } else {
+      return null;
+    }
+  }
 
   @PostMapping(value = "{userId}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -11,6 +11,8 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
   List<UserEntity> findAllByScreenNameContaining(String screenName);
 
+  UserEntity findAllByScreenName(String screenName);
+
   List<UserEntity> findAllByFirstNameContainsOrLastNameContains(String firstlName, String lastName);
 
   List<UserEntity> findAllByFirstNameContains(String firstName);
