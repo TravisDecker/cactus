@@ -1,6 +1,7 @@
 package space.straylense.cactus.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -33,15 +34,17 @@ public class HomeController {
     this.postRepository = postRepository;
   }
 
+
+  //TODO needs further testing
   @GetMapping(value = "{userId}",
       produces = MediaType.APPLICATION_JSON_VALUE)
   public List<PostEntity> getHome(@PathVariable("userId") UUID userId) {
     UserEntity user = userRepository.findAllByUserId(userId);
     List<PostEntity> feed = new ArrayList<>();
-    for (UserEntity freind : user.getFriends()
-    ) {
+    for (UserEntity freind : user.getFriends()) {
       feed.addAll(postRepository.findAllByUserOrderByPostDate(user));
     }
+    Collections.sort(feed);
     return feed;
   }
 

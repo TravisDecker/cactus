@@ -24,7 +24,7 @@ import space.straylense.cactus.view.BaseUserEntity;
 
 @Entity
 @Component
-public class PostEntity implements BasePostEntity {
+public class PostEntity implements BasePostEntity, Comparable<PostEntity> {
 
   private static EntityLinks entityLinks;
 
@@ -140,6 +140,11 @@ public class PostEntity implements BasePostEntity {
 
   public List<CommentEntity> getComments() {
     return comments;
+  }
+
+  @Override
+  public int compareTo(PostEntity post) {
+    return getPostDate().compareTo(post.getPostDate());
   }
 
 }
