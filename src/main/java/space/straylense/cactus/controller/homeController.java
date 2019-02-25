@@ -42,22 +42,12 @@ public class HomeController {
     UserEntity user = userRepository.findAllByUserId(userId);
     List<PostEntity> feed = new ArrayList<>();
     for (UserEntity freind : user.getFriends()) {
+      feed.addAll(postRepository.findAllByUserOrderByPostDate(freind));
       feed.addAll(postRepository.findAllByUserOrderByPostDate(user));
     }
     Collections.sort(feed);
     return feed;
   }
-
-//  @PostMapping(value = "{userId}",
-//      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//  public ResponseEntity<PostEntity> postPost(@PathVariable("userId") UUID userId,
-//      @RequestBody PostEntity post) {
-//    UserEntity user = userRepository.findAllByUserId(userId);
-//    post.setUser(user);
-//    postRepository.save(post);
-//    return ResponseEntity.created(post.getHref()).body(post);
-//  }
-
 
   @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
   @ExceptionHandler(NoSuchElementException.class)

@@ -38,12 +38,14 @@ public class UserController {
 
   //TODO Do something other than nothing when user attempts to post a duplicate user.
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
-    if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
+  public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user)
+      throws DupliacteResourcesException {
+    if (userRepository.findAllByScreenName(user.getScreenName().toUpperCase()) == null) {
+      user.setScreenName(user.getScreenName().toUpperCase());
       userRepository.save(user);
       return ResponseEntity.created(user.getHref()).body(user);
     } else {
-      return null;
+      throw new DupliacteResourcesException();
     }
   }
 
@@ -104,6 +106,12 @@ public class UserController {
   @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
   @ExceptionHandler(NoSuchElementException.class)
   public void notFound() {
+  }
+
+  @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Conflict, Duplicate Resource")
+  @ExceptionHandler({DupliacteResourcesException.class})
+  public void duplicateResource() {
+
   }
 
 }
