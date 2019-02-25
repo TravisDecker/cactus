@@ -36,7 +36,7 @@ public class UserController {
     this.postRepository = postRepository;
   }
 
-  //TODO Do somthing other than nothing when user attempts to post a duplicate user.
+  //TODO Do something other than nothing when user attempts to post a duplicate user.
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user) {
     if (userRepository.findAllByScreenName(user.getScreenName()) == null) {
@@ -82,10 +82,20 @@ public class UserController {
     return result;
   }
 
+
+  @PostMapping(value = "addfriend/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UserEntity> addFriend(@PathVariable("userId") UUID userId,
+      @RequestBody UserEntity friend) {
+    UserEntity user = userRepository.findAllByUserId(userId);
+    user.getFriends().add(friend);
+    userRepository.save(user);
+    return ResponseEntity.created(user.getHref()).body(user);
+  }
+
+
   public List<UserEntity> getUserByLastName(String lastName) {
     return userRepository.findAllByLastNameContains(lastName);
   }
-
 
   public List<UserEntity> getUserByFirstName(String firstName) {
     return userRepository.findAllByFirstNameContains(firstName);
