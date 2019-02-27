@@ -58,11 +58,10 @@ public class UserController {
     } else {
       throw new DuplicateResourcesException();
     }
-
     if (user.getScreenName().contains(" ")) {
       flag = false;
+      throw new DuplicateResourcesException();
     }
-
     return flag;
   }
 
