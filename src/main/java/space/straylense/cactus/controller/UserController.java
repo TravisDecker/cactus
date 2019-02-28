@@ -44,25 +44,19 @@ public class UserController {
       user.setScreenName(user.getScreenName().toUpperCase());
       userRepository.save(user);
       return ResponseEntity.created(user.getHref()).body(user);
-    } else {
-      return null;
     }
+    return null;
   }
 
-  public boolean checkScreenName(UserEntity user) throws DuplicateResourcesException {
-
-    boolean flag = false;
-
-    if (userRepository.findAllByScreenName(user.getScreenName().toUpperCase()) == null) {
-      flag = true;
-    } else {
-      throw new DuplicateResourcesException();
-    }
+  public boolean checkScreenName(UserEntity user)
+      throws DuplicateResourcesException, EntryFormatException {
     if (user.getScreenName().contains(" ")) {
-      flag = false;
+      throw new EntryFormatException();
+    }
+    if (userRepository.findAllByScreenName(user.getScreenName().toUpperCase()) != null) {
       throw new DuplicateResourcesException();
     }
-    return flag;
+    return true;
   }
 
   @PostMapping(value = "{userId}",
