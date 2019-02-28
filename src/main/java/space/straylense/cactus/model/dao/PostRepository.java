@@ -13,4 +13,6 @@ public interface PostRepository extends CrudRepository<PostEntity, UUIDBinaryTyp
 
   List<PostEntity> findAllByUserOrderByPostDate(UserEntity user);
 
+  PostEntity findAllByPostId(UUID postId);
+
 }
