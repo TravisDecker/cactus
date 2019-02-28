@@ -36,7 +36,7 @@ public class UserController {
     this.postRepository = postRepository;
   }
 
-  //TODO Do something other than nothing when user attempts to post a duplicate user.
+  //TODO Check screenName case insensitive, do away with saving all caps
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user)
       throws DuplicateResourcesException {
