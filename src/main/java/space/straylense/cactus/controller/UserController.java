@@ -59,6 +59,7 @@ public class UserController {
     return true;
   }
 
+  //TODO fix recursive return.
   @PostMapping(value = "{userId}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PostEntity> postPost(@PathVariable("userId") UUID userId,
@@ -97,8 +98,9 @@ public class UserController {
 
   @PostMapping(value = "addfriend/{userId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> addFriend(@PathVariable("userId") UUID userId,
-      @RequestBody UserEntity friend) {
+      @RequestBody UserEntity partialFriend) {
     UserEntity user = userRepository.findAllByUserId(userId);
+    UserEntity friend = userRepository.findAllByUserId(partialFriend.getUserId());
     user.getFriends().add(friend);
     userRepository.save(user);
     return ResponseEntity.created(user.getHref()).body(user);
