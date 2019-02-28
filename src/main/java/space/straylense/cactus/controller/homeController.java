@@ -46,6 +46,7 @@ public class HomeController {
       feed.addAll(postRepository.findAllByUserOrderByPostDate(user));
     }
     Collections.sort(feed);
+    Collections.reverse(feed);
     return feed;
   }
 
