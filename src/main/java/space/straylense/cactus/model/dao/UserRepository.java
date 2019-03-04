@@ -9,11 +9,11 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
   UserEntity findAllByUserId(UUID userID);
 
-  List<UserEntity> findAllByScreenNameContaining(String screenName);
+  UserEntity findAllByUserName(String userName);
 
-  UserEntity findAllByScreenName(String screenName);
+  List<UserEntity> findAllByUserNameContains(String userName);
 
-  List<UserEntity> findAllByFirstNameContainsOrLastNameContains(String firstlName, String lastName);
+  List<UserEntity> findAllByFirstNameContainsOrLastNameContains(String firstName, String lastName);
 
   List<UserEntity> findAllByFirstNameContains(String firstName);
 

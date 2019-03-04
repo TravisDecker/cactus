@@ -40,20 +40,20 @@ public class UserController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user)
       throws DuplicateResourcesException {
-    if (checkScreenName(user)) {
-      user.setUserName(user.getUserName().toUpperCase());
+    if (checkUserName(user)) {
+      user.setUserName(user.getDisplayName().toUpperCase());
       userRepository.save(user);
       return ResponseEntity.created(user.getHref()).body(user);
     }
     return null;
   }
 
-  public boolean checkScreenName(UserEntity user)
+  public boolean checkUserName(UserEntity user)
       throws DuplicateResourcesException, EntryFormatException {
-    if (user.getUserName().contains(" ")) {
+    if (user.getDisplayName().contains(" ")) {
       throw new EntryFormatException();
     }
-    if (userRepository.findAllByScreenName(user.getUserName().toUpperCase()) != null) {
+    if (userRepository.findAllByUserName(user.getDisplayName().toUpperCase()) != null) {
       throw new DuplicateResourcesException();
     }
     return true;
@@ -75,9 +75,9 @@ public class UserController {
     return userRepository.findAllByUserId(userId);
   }
 
-  @GetMapping(value = "{screenName}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<UserEntity> getUserByScreenName(@PathVariable("screenName") String screenName) {
-    return userRepository.findAllByScreenNameContaining(screenName);
+  @GetMapping(value = "{displayName}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<UserEntity> getUserByScreenName(@PathVariable("displayName") String displayName) {
+    return userRepository.findAllByUserNameContains(displayName.toUpperCase());
   }
 
   @GetMapping(value = "searchbyname/{partialName}", produces = MediaType.APPLICATION_JSON_VALUE)
