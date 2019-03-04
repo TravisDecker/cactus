@@ -7,7 +7,7 @@ public interface BaseUserEntity {
 
   public UUID getUserId();
 
-  public String getScreenName();
+  public String getUserName();
 
   public String getProfilePicture();
 

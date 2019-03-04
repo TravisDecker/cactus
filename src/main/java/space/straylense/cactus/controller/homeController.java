@@ -45,8 +45,8 @@ public class HomeController {
   public List<PostEntity> getFeed(@PathVariable("userId") UUID userId) {
     UserEntity user = userRepository.findAllByUserId(userId);
     List<PostEntity> feed = new ArrayList<>();
-    for (UserEntity freind : user.getFriends()) {
-      feed.addAll(postRepository.findAllByUserOrderByPostDate(freind));
+    for (UserEntity friend : user.getFriends()) {
+      feed.addAll(postRepository.findAllByUserOrderByPostDate(friend));
       feed.addAll(postRepository.findAllByUserOrderByPostDate(user));
     }
     Collections.sort(feed);

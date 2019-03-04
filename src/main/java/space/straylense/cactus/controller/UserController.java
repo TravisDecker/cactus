@@ -41,7 +41,7 @@ public class UserController {
   public ResponseEntity<UserEntity> postUser(@RequestBody UserEntity user)
       throws DuplicateResourcesException {
     if (checkScreenName(user)) {
-      user.setScreenName(user.getScreenName().toUpperCase());
+      user.setUserName(user.getUserName().toUpperCase());
       userRepository.save(user);
       return ResponseEntity.created(user.getHref()).body(user);
     }
@@ -50,10 +50,10 @@ public class UserController {
 
   public boolean checkScreenName(UserEntity user)
       throws DuplicateResourcesException, EntryFormatException {
-    if (user.getScreenName().contains(" ")) {
+    if (user.getUserName().contains(" ")) {
       throw new EntryFormatException();
     }
-    if (userRepository.findAllByScreenName(user.getScreenName().toUpperCase()) != null) {
+    if (userRepository.findAllByScreenName(user.getUserName().toUpperCase()) != null) {
       throw new DuplicateResourcesException();
     }
     return true;

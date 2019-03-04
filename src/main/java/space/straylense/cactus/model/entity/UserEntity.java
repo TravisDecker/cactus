@@ -32,7 +32,9 @@ public class UserEntity implements BaseUserEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID userId;
   @NonNull
-  private String screenName;
+  private String userName;
+  @NonNull
+  private String displayName;
   @NonNull
   private String profilePicture;
   @NonNull
@@ -87,12 +89,20 @@ public class UserEntity implements BaseUserEntity {
   }
 
   @Override
-  public String getScreenName() {
-    return screenName;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setScreenName(String screenName) {
-    this.screenName = screenName;
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
   }
 
   @Override
