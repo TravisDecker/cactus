@@ -15,14 +15,14 @@ public class ReportController {
 
   private UserRepository userRepository;
   private PostRepository postRepository;
-  private ReportRepository reportRepositor;
+  private ReportRepository reportRepository;
 
   public ReportController(UserRepository userRepository,
       PostRepository postRepository,
-      ReportRepository reportRepositor) {
+      ReportRepository reportRepository) {
     this.userRepository = userRepository;
     this.postRepository = postRepository;
-    this.reportRepositor = reportRepositor;
+    this.reportRepository = reportRepository;
   }
 
 
