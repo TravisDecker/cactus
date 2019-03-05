@@ -1,12 +1,16 @@
 package space.straylense.cactus.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import space.straylense.cactus.view.BasePostEntity;
@@ -16,10 +20,12 @@ import space.straylense.cactus.view.BaseUserEntity;
 @Component
 public class ReportEntity {
 
+  private static EntityLinks entityLinks;
+
   @Id
   @NonNull
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID reportID;
+  private UUID reportId;
 
   private Date reportDate = new Date();
 
@@ -35,12 +41,30 @@ public class ReportEntity {
 
   private CommentEntity reportedComment;
 
-  public UUID getReportID() {
-    return reportID;
+  public static EntityLinks getEntityLinks() {
+    return entityLinks;
   }
 
-  public void setReportID(UUID reportID) {
-    this.reportID = reportID;
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    ReportEntity.entityLinks = entityLinks;
+  }
+
+  @PostConstruct
+  private void initEntityLinks() {
+    String ignore = entityLinks.toString();
+  }
+
+  public URI getHref() {
+    return entityLinks.linkForSingleResource(UserEntity.class, reportId).toUri();
+  }
+
+  public UUID getReportId() {
+    return reportId;
+  }
+
+  public void setReportId(UUID reportId) {
+    this.reportId = reportId;
   }
 
   public Date getReportDate() {

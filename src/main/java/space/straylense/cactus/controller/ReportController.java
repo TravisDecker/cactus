@@ -25,5 +25,10 @@ public class ReportController {
     this.reportRepository = reportRepository;
   }
 
-
+//@PostMapping(value = "{postId}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//  public ResponseEntity<ReportEntity> postReportPost(@RequestBody ReportEntity report){
+//
+//
+//    return ResponseEntity.created(report)
+//}
 }
