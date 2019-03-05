@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
@@ -33,12 +34,15 @@ public class ReportEntity {
 
   private String repoertComment;
 
+  @OneToOne
   @JsonSerialize(contentAs = BaseUserEntity.class)
   private UserEntity reportedUser;
 
+  @OneToOne
   @JsonSerialize(contentAs = BasePostEntity.class)
   private PostEntity reportedPost;
 
+  @OneToOne
   private CommentEntity reportedComment;
 
   public static EntityLinks getEntityLinks() {
