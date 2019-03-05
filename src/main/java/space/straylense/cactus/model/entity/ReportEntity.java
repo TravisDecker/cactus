@@ -14,7 +14,7 @@ import space.straylense.cactus.view.BaseUserEntity;
 
 @Entity
 @Component
-public class reportEntity {
+public class ReportEntity {
 
   @Id
   @NonNull
