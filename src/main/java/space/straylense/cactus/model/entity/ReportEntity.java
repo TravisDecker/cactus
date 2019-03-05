@@ -25,6 +25,8 @@ public class ReportEntity {
 
   private boolean reportReviewed = false;
 
+  private String repoertComment;
+
   @JsonSerialize(contentAs = BaseUserEntity.class)
   private UserEntity reportedUser;
 
@@ -47,6 +49,14 @@ public class ReportEntity {
 
   public void setReportDate(Date reportDate) {
     this.reportDate = reportDate;
+  }
+
+  public String getRepoertComment() {
+    return repoertComment;
+  }
+
+  public void setRepoertComment(String repoertComment) {
+    this.repoertComment = repoertComment;
   }
 
   public boolean isReportReviewed() {
