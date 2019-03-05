@@ -36,7 +36,7 @@ public class UserEntity implements BaseUserEntity {
   @NonNull
   private String displayName;
   @NonNull
-  private String profilePicture;
+  private byte[] profilePicture;
   @NonNull
   private boolean reportFlag = false;
   @NonNull
@@ -106,11 +106,11 @@ public class UserEntity implements BaseUserEntity {
   }
 
   @Override
-  public String getProfilePicture() {
+  public byte[] getProfilePicture() {
     return profilePicture;
   }
 
-  public void setProfilePicture(String profilePicture) {
+  public void setProfilePicture(byte[] profilePicture) {
     this.profilePicture = profilePicture;
   }
 

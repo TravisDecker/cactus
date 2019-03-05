@@ -9,7 +9,7 @@ public interface BaseUserEntity {
 
   public String getUserName();
 
-  public String getProfilePicture();
+  public byte[] getProfilePicture();
 
   public boolean getReportFlag();
 
